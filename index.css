@@ -1,0 +1,48 @@
+:root {
+  --mdc-theme-primary: #ff6f61;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+}
+
+a {
+  color: unset;
+}
+
+.mdi:before {
+  transform: translateY(-3px);
+}
+
+nav {
+  height: 64px;
+}
+
+nav h1 {
+  margin-left: 24px;
+}
+
+nav button {
+  display: inline-block;
+}
+
+input[type="file"] {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+header.mdc-top-app-bar {
+  position: unset;
+}
+
+.timecard-icon {
+  background-image: url(./timecard.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
