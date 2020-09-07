@@ -2,45 +2,45 @@
 <html>
 
 <head>
-  <title>Timecard</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.1.45/css/materialdesignicons.min.css">
+    <title>Timecard</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.1.45/css/materialdesignicons.min.css">
 
-  <link rel="shortcut icon" type="image/png" href="./timecard-coral.png" />
+    <link rel="shortcut icon" type="image/png" href="./timecard-coral.png" />
 
-  <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./index.css" />
 </head>
 
 <body>
-  <header class="mdc-top-app-bar">
-    <div class="mdc-top-app-bar__row">
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button class="mdc-icon-button timecard-icon mdc-top-app-bar__navigation-icon--unbounded"></button>
-        <span class="mdc-top-app-bar__title">Timecard</span>
-      </section>
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-        <a href="./info.txt" target="_blank" >
-          <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Sign in">info</button>
-        </a>
-        <button id="authorize_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" style="display: none;" aria-label="Sign in">person_add</button>
-        <button id="signout_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" style="display: none;" aria-label="Sign in">exit_to_app</button>
-        <button id="picker_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Google Drive"><span class="mdi mdi-folder-google-drive"></span></button>
-        <button id="update_token_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Update token">vpn_key</button>
-        <input type="file" name="file" id="file">
-        <label id="drop_area" for="file" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Upload json.txt">publish</label>
-      </section>
-    </div>
-  </header>
-  <div id="plot" style="width:100%;height:600px;"></div>
-  <script src="index.js"></script>
-  <script async defer src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script async defer src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad();" onreadystatechange="if (this.readyState === 'complete') this.onload()">
-  </script>
-  <script async defer src="/shared/js/cookie-v2.min.js"></script>
+    <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <button class="mdc-icon-button timecard-icon mdc-top-app-bar__navigation-icon--unbounded"></button>
+                <span class="mdc-top-app-bar__title">Timecard</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+                <a href="./info.txt" target="_blank">
+                    <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Sign in">info</button>
+                </a>
+                <button id="authorize_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" style="display: none;" aria-label="Sign in">person_add</button>
+                <button id="signout_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" style="display: none;" aria-label="Sign in">exit_to_app</button>
+                <button id="picker_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Google Drive"><span class="mdi mdi-folder-google-drive"></span></button>
+                <button id="update_token_button" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Update token">vpn_key</button>
+                <input type="file" name="file" id="file">
+                <label id="drop_area" for="file" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Upload json.txt">publish</label>
+            </section>
+        </div>
+    </header>
+    <div id="plot" style="width:100%;height:600px;"></div>
+    <script src="index.js"></script>
+    <script async defer src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script async defer src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad();" onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <script async defer src="/shared/js/cookie-v2.min.js"></script>
 </body>
 
 </html>
