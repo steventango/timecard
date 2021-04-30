@@ -46,3 +46,7 @@ header.mdc-top-app-bar {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+#plot {
+  height: calc(100vh - 80px);
+}

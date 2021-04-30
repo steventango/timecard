@@ -1,16 +1,17 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '818544111364-5ffmploj9m0r536h5612m8mghtik3s88.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyDhZHHxPKc8K40yd4f296Jc8PCsNMvSRaM';
-
-// Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+const CLIENT_ID = '818544111364-5ffmploj9m0r536h5612m8mghtik3s88.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyDhZHHxPKc8K40yd4f296Jc8PCsNMvSRaM';
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
-var authorizeButton = document.getElementById('authorize_button');
-var signoutButton = document.getElementById('signout_button');
+const authorize_button = document.getElementById('authorize_button');
+const signout_button = document.getElementById('signout_button');
+const picker_button = document.getElementById('picker_button');
+picker_button.addEventListener('click', createPicker);
+const update_token_button = document.getElementById('update_token_button');
+update_token_button.addEventListener('click', updateToken);
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -28,7 +29,6 @@ function initClient() {
   gapi.client.init({
     apiKey: API_KEY,
     clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   }).then(function () {
     // Listen for sign-in state changes.
@@ -36,21 +36,22 @@ function initClient() {
 
     // Handle the initial sign-in state.
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    authorizeButton.onclick = handleAuthClick;
-    signoutButton.onclick = handleSignoutClick;
+    authorize_button.onclick = handleAuthClick;
+    signout_button.onclick = handleSignoutClick;
   }, function (error) {
-    ['authorize_button', 'signout_button', 'picker_button', 'update_token_button'].forEach(button => button.style.display = 'none');
+    [authorize_button, signout_button, picker_button, update_token_button]
+      .forEach(button => button.style.display = 'none');
     console.error(JSON.stringify(error, null, 2));
   });
 }
 
 function updateSigninStatus(isSignedIn) {
   if (isSignedIn) {
-    authorizeButton.style.display = 'none';
-    signoutButton.style.display = 'inline-block';
+    authorize_button.style.display = 'none';
+    signout_button.style.display = 'inline-block';
   } else {
-    authorizeButton.style.display = 'inline-block';
-    signoutButton.style.display = 'none';
+    authorize_button.style.display = 'inline-block';
+    signout_button.style.display = 'none';
   }
 }
 
@@ -84,14 +85,11 @@ function createPicker() {
   }
 }
 
-document.getElementById('picker_button').addEventListener('click', createPicker);
-
-var DOC;
+let DOC;
 
 async function pickerCallback(data) {
   if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
     DOC = data[google.picker.Response.DOCUMENTS][0];
-    console.log(DOC);
     var url = await generate_url(DOC);
     download(url);
   }
@@ -132,12 +130,11 @@ function updateToken() {
   Cookie.set('TOKEN', TOKEN, 10);
 }
 
-document.getElementById('update_token_button').addEventListener('click', updateToken);
+let data;
+let NAME;
+let TOTAL = 0;
 
-var data;
-var NAME;
-
-var dropArea = document.getElementById('drop_area');
+const dropArea = document.getElementById('drop_area');
 
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   dropArea.addEventListener(eventName, (e) => {
@@ -168,22 +165,20 @@ dropArea.addEventListener('drop', (e) => {
 const inputElement = document.getElementById("file");
 inputElement.addEventListener("change", handleFiles, false);
 function handleFiles(files) {
-  const fileList = files || this.files;
+  const fileList = this.files || files;
   const file = fileList[0];
   NAME = file.name.slice(0, -4);
   const reader = new FileReader();
   reader.onload = () => {
     data = reader.result;
     data = JSON.parse(data.slice(4));
-    console.log("File Read");
     sumtime();
     plot();
   };
-  console.log("Reading File");
   reader.readAsText(file);
 }
 
-var editors;
+let editors;
 
 function sumtime() {
   editors = {};
@@ -219,6 +214,7 @@ function sumtime() {
     }
   }
 
+  TOTAL = 0;
   for (var key in editors) {
     var editor = editors[key];
     editor.interactions.push({
@@ -226,31 +222,33 @@ function sumtime() {
       sum: editor.sum
     });
     editor.total += editor.sum;
+    TOTAL += editor.total;
     delete editor.delta;
     delete editor.first;
     delete editor.sum;
     delete editor.last;
     editor.user = data.userMap[key];
   }
-  var sorted = {};
-  Object.keys(editors).sort((a, b) => editors[b].user.name.localeCompare(editors[a].user.name)).forEach((key) => {
-    sorted[key] = editors[key];
-  });
+  let sorted = {};
+  Object.keys(editors)
+    .sort((a, b) => editors[b].user.name.localeCompare(editors[a].user.name))
+    .forEach((key) => {
+      sorted[key] = editors[key];
+    });
 
   editors = sorted;
-  console.log(editors);
 }
 
 function plot() {
-  var plotdata = [];
+  let plotdata = [];
   for (let editor of Object.values(editors)) {
     editor.offset = 0;
-    for (var i = 0; i < editor.interactions.length; i++) {
-      var interaction = editor.interactions[i];
-      var object = {
+    for (let i = 0; i < editor.interactions.length; i++) {
+      let interaction = editor.interactions[i];
+      let object = {
         x: [],
-        sum: [],
         y: [],
+        sum: [],
         color: []
       };
       if (!plotdata[i]) {
@@ -269,9 +267,9 @@ function plot() {
     delete editor.offset;
   }
 
-  var traces = [];
-
-  for (var i = 0; i < plotdata.length; i++) {
+  let traces = [];
+  console.log(plotdata);
+  for (let i = 0; i < plotdata.length; ++i) {
     traces.push({
       x: plotdata[i].x,
       y: plotdata[i].y,
@@ -288,13 +286,13 @@ function plot() {
       orientation: 'h',
       marker: { color: plotdata[i].color },
       showlegend: false,
-      hoverinfo: 'none',//plotdata[i].sum.map(values => moment(values).format('H:mm:ss')),
+      hoverinfo: 'none',
       type: 'bar'
     });
   }
 
-  var layout = {
-    title: DOC ? DOC.name : NAME,
+  let layout = {
+    title: `${(DOC ? DOC.name : NAME)}<br><sub>${moment(TOTAL).utc().format('H:mm:ss')}</sub>`,
     barmode: 'stack',
     xaxis: {
       showgrid: true,
