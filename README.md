@@ -9,7 +9,7 @@ To use without "https://www.googleapis.com/auth/drive.metadata.readonly" scope, 
 https://docs.google.com/document/d/{ID}/revisions/tiles?id={ID}&start=1&end={END}&showDetailedRevisions=true&filterNamed=false&token={TOKEN}&includes_info_params=true
 ```
 
-Note the code quality here is lower than my other projects, as this entire project was completed in 7 hours due to the lack of a reliable official API.
+Note: the code quality here is lower than my other projects, as this entire project was completed in 7 hours due to the lack of a reliable official API (https://issuetracker.google.com/u/0/issues/36761246).
 
 ## Example
 ![Screenshot](https://raw.githubusercontent.com/steventango/timecard/master/screenshot.png)
